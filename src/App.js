@@ -1,9 +1,7 @@
+import Body from "./components/Body";
+
 function App() {
-  return (
-    <div className="border border-black m-2 p-2">
-      <h1>Netflix GPT</h1>
-    </div>
-  );
+  return <Body />;
 }
 
 export default App;
