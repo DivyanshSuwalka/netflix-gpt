@@ -1,9 +1,11 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
 
 const Browse = () => {
   const navigate = useNavigate();
+  // const user = useSelector((store) => store.user);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -25,9 +27,15 @@ const Browse = () => {
       />
       <button
         onClick={handleSignOut}
-        className="my-10 m-16 px-2 bg-red-700 rounded-md text-white font-bold"
+        className="my-10 m-16 pr-2 hover:shadow-xl  bg-transparent rounded-md text-white font-bold "
       >
-        Sign Out
+        <img
+          className="w-8 rounded-md inline mr-2"
+          src={"https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+          }
+          alt="user-logo"
+        />
+        Logout
       </button>
     </div>
   );

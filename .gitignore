@@ -24,4 +24,5 @@ yarn-error.log*
 
 referenceREADME.md
 .firebaserc
+.firebase
 .env

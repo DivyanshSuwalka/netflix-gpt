@@ -8,19 +8,23 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isSignIn, setIsSignIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const fName = useRef(null);
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);
   };
+
   const handleButtonClick = () => {
     // console.log(email.current.value, password.current.value);
     // validating form data
@@ -39,11 +43,20 @@ const Login = () => {
           // Signed up
           const user = userCredential.user;
           updateProfile(auth.currentUser, {
-            displayName: fName.current.value,
+            displayName: name.current.value,
             photoURL: "https://avatars.githubusercontent.com/u/76103075?v=4",
           })
             .then(() => {
               // Profile updated!
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
               navigate("/browse");
               console.log(user, auth);
             })
@@ -65,8 +78,9 @@ const Login = () => {
       )
         .then((userCredential) => {
           // Signed in
-          // const user = userCredential.user;
+          const user = userCredential.user;
           navigate("/browse");
+          console.log(user);
         })
         .catch((error) => {
           console.log(error.code);
@@ -95,7 +109,7 @@ const Login = () => {
         </h1>
         {!isSignIn && (
           <input
-            ref={fName}
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="p-4 my-2 bg-opacity-30 rounded-md text-white bg-gray-700 w-full"
