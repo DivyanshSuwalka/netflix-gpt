@@ -1,11 +1,15 @@
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import Header from "./Header";
+import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
   useNowPlayingMovies();
   return (
-    <div className="flex justify-between bg-gradient-to-b from-black bg-opacity-10">
+    <div className="">
       <Header />
+      <MainContainer />
+      <SecondaryContainer />
     </div>
   );
 };
