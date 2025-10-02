@@ -52,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex justify-between absolute px-8  bg-gradient-to-b from-black  w-full z-10">
+    <div className="flex justify-between absolute px-8 bg-gradient-to-b from-black w-full z-10">
       <img className="w-40 m-6" src={LOGO} alt="logo" />
       {user && (
         <button
