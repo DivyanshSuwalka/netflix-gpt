@@ -5,13 +5,24 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
-import { LOGO } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector((store) => store.user);
+  const gptSearchView = useSelector((store) => store.gpt.showGptSearch);
+
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -52,24 +63,44 @@ const Header = () => {
   };
 
   return (
-    <div className="flex justify-between absolute px-8 bg-gradient-to-b from-black w-full z-10">
+    <div className="flex justify-between absolute px-4 bg-gradient-to-b from-black w-full z-10">
       <img className="w-40 m-6" src={LOGO} alt="logo" />
       {user && (
-        <button
-          onClick={handleSignOut}
-          className="my-10 m-16 pr-2 hover:shadow-xl bg-transparent rounded-md text-white font-bold"
-        >
-          <img
-            className="w-10 rounded-md inline mr-2"
-            src={
-              !auth.currentUser.photoURL
-                ? "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
-                : auth.currentUser.photoURL
-            }
-            alt="user-logo"
-          />
-          Logout
-        </button>
+        <div>
+          {gptSearchView && (
+            <select
+              className="bg-black text-white rounded-md m-4 p-2"
+              onChange={(e) => handleLanguageChange(e)}
+            >
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <option key={language?.identifier} value={language.identifier}>
+                  {language.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            onClick={() => handleGptSearchClick()}
+            className="px-4 py-2 hover:shadow-xl bg-red-800 rounded-md text-lg text-white"
+          >
+            {gptSearchView? "Home Page": "GPT Search"}
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="my-10 m-16 pr-2 hover:shadow-xl bg-transparent rounded-md text-white"
+          >
+            <img
+              className="w-10 rounded-md inline mr-2"
+              src={
+                !auth.currentUser.photoURL
+                  ? "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+                  : auth.currentUser.photoURL
+              }
+              alt="user-icon"
+            />
+            Logout
+          </button>
+        </div>
       )}
     </div>
   );

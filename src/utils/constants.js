@@ -3,7 +3,15 @@ export const LOGO =
 export const USER_AVATAR =
   "https://avatars.githubusercontent.com/u/76103075?v=4";
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500";
+export const BG_URL =
+  "https://assets.nflxext.com/ffe/siteui/vlv3/c95abc7a-8124-4630-bb7a-3b160bdc6de3/web/IN-en-20250915-TRIFECTA-perspective_d3d87aa7-58ed-4c6b-98dc-231ed05ba675_large.jpg";
 
+export const SUPPORTED_LANGUAGES = [
+  { identifier: "en", name: "English" },
+  { identifier: "hindi", name: "Hindi" },
+  { identifier: "spanish", name: "Spanish" },
+  { identifier: "french", name: "French" },
+];
 // export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 const authToken = process.env.REACT_APP_TMDB_AUTH;
